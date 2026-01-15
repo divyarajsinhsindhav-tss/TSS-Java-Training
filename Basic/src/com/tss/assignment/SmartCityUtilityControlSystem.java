@@ -238,62 +238,16 @@ public class SmartCityUtilityControlSystem {
 
             switch (user_subchoice) {
                 case 1:
-                    while(true) {
-                        plan_type = "Student Plan";
-                        duration = getDuration();
-                        if (duration == 1) {
-                            bill = 299;
-                            break;
-                        } else if (duration == 3) {
-                            bill = 799;
-                            break;
-                        } else if (duration == 6) {
-                            bill = 1499;
-                            break;
-                        } else {
-                            System.out.println("Enter valid duration");
-                            continue;
-                        }
-                    }
+                    plan_type = "Student Plan";
+                    calculateStudentPlanBill(plan_type, duration, bill, discount);
                     break;
                 case 2:
-                    while (true) {
-                        plan_type = "Home Plan";
-                        duration = getDuration();
-                        if (duration == 1) {
-                            bill = 499;
-                            break;
-                        } else if (duration == 3) {
-                            bill = 1399;
-                            break;
-                        } else if (duration == 6) {
-                            bill = 2699;
-                            break;
-                        } else {
-                            System.out.println("Enter valid duration");
-                            continue;
-                        }
-                    }
+                    plan_type = "Home Plan";
+                    claculateHomePlanBill(plan_type, duration, bill, discount);
                     break;
                 case 3:
-                    while(true) {
-                        plan_type = "Business Plan";
-                        duration = getDuration();
-                        if (duration == 1) {
-                            bill = 999;
-                            break;
-                        } else if (duration == 3) {
-                            bill = 2799;
-                            break;
-                        } else if (duration == 6) {
-                            bill = 5499;
-                            break;
-                        } else {
-                            System.out.println("Enter valid duration");
-                            continue;
-                        }
-                    }
-
+                    plan_type = "Business Plan";
+                    calculateBuisneesPlanBill(plan_type, duration, bill, discount);
                     break;
                 case 4:
                     return;
@@ -301,11 +255,6 @@ public class SmartCityUtilityControlSystem {
                     System.out.println("Please enter valid choice");
                     continue;
             }
-            if (duration == 6) {
-                discount = bill*0.05;
-                bill = bill - discount;
-            }
-            displayInternetServiceData(plan_type, duration, discount, bill);
         }
     }
     private static int getDuration() {
@@ -318,6 +267,75 @@ public class SmartCityUtilityControlSystem {
         System.out.println("Duration: " + duration);
         System.out.println("Discount: " + discount);
         System.out.println("Bill: " + bill);
+    }
+    private static void calculateStudentPlanBill(String plan_type, int duration, double bill, double discount) {
+        while(true) {
+            duration = getDuration();
+            if (duration == 1) {
+                bill = 299;
+                break;
+            } else if (duration == 3) {
+                bill = 799;
+                break;
+            } else if (duration == 6) {
+                bill = 1499;
+                break;
+            } else {
+                System.out.println("Enter valid duration");
+                continue;
+            }
+        }
+        if (duration == 6) {
+            discount = bill*0.05;
+            bill = bill - discount;
+        }
+        displayInternetServiceData(plan_type, duration, discount, bill);
+    }
+    private static void claculateHomePlanBill(String plan_type, int duration, double bill, double discount) {
+        while (true) {
+            duration = getDuration();
+            if (duration == 1) {
+                bill = 499;
+                break;
+            } else if (duration == 3) {
+                bill = 1399;
+                break;
+            } else if (duration == 6) {
+                bill = 2699;
+                break;
+            } else {
+                System.out.println("Enter valid duration");
+                continue;
+            }
+        }
+        if (duration == 6) {
+            discount = bill*0.05;
+            bill = bill - discount;
+        }
+        displayInternetServiceData(plan_type, duration, discount, bill);
+    }
+    private static void calculateBuisneesPlanBill(String plan_type, int duration, double bill, double discount) {
+        while(true) {
+            duration = getDuration();
+            if (duration == 1) {
+                bill = 999;
+                break;
+            } else if (duration == 3) {
+                bill = 2799;
+                break;
+            } else if (duration == 6) {
+                bill = 5499;
+                break;
+            } else {
+                System.out.println("Enter valid duration");
+                continue;
+            }
+        }
+        if (duration == 6) {
+            discount = bill*0.05;
+            bill = bill - discount;
+        }
+        displayInternetServiceData(plan_type, duration, discount, bill);
     }
 
 }
