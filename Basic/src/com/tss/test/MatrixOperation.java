@@ -18,10 +18,14 @@ public class MatrixOperation {
             System.out.println("5. Check Magical Matrix");
             System.out.println("6. Check Prime Harmonic");
             System.out.println("7. Exit");
+
             System.out.print("Enter choice: ");
-
             int choice = scanner.nextInt();
-
+            while (choice != 1 && choice !=2 && choice !=3 && choice !=4 && choice !=5 && choice !=6 && choice !=7 ) {
+                System.out.println("Enter valid choice from 1 to 7.");
+                System.out.print("Enter choice: ");
+                choice = scanner.nextInt();
+            }
             switch (choice) {
                 case 1:
                     createMatrix();
@@ -60,10 +64,14 @@ public class MatrixOperation {
     }
 
     private static void createMatrix() {
-        System.out.print("Enter rows: ");
-        row = scanner.nextInt();
-        System.out.print("Enter columns: ");
-        col = scanner.nextInt();
+        do {
+            System.out.print("Enter rows (>0): ");
+            row = scanner.nextInt();
+        } while (row <= 0);
+        do {
+            System.out.print("Enter columns (>0): ");
+            col = scanner.nextInt();
+        } while (col <= 0);
 
         matrix = new int[row][col];
 
@@ -90,12 +98,24 @@ public class MatrixOperation {
     }
 
     private static void addition() {
-        if (matrix == null) return;
+        if (matrix == null) {
+            createMatrix();
+        }
+
+        System.out.println("Create a matrix with dimension of " + row + "*" + col);
+        int[][] secondMatrix = new int[row][col];
+
+        System.out.println("Enter second matrix elements:");
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                secondMatrix[i][j] = scanner.nextInt();
+            }
+        }
 
         int[][] result = new int[row][col];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
-                result[i][j] = matrix[i][j] + matrix[i][j];
+                result[i][j] = matrix[i][j] + secondMatrix[i][j];
             }
         }
 
@@ -104,25 +124,38 @@ public class MatrixOperation {
     }
 
     private static void multiplication() {
-        if (matrix == null) return;
+        if (matrix == null) {
+            System.out.println("Matrix not created yet! Please create a matrix first.");
+            createMatrix();
+        };
 
-        System.out.print("Enter columns for second matrix: ");
-        int secondMatrixCol = scanner.nextInt();
+        System.out.println("Matrix multiplication rule:");
+        System.out.println("First matrix size: " + row + " x " + col);
+        System.out.println("Second matrix must have " + col + " rows.");
 
-        int[][] secondMatrix = new int[col][secondMatrixCol];
+        int secondMatrixCol;
+        do {
+            System.out.print("Enter columns for second matrix: ");
+            secondMatrixCol = scanner.nextInt();
+        } while (col <= 0);
+
+        int secondMatrixRow = col;
+        int firstMatrixRow = row;
+
+        int[][] secondMatrix = new int[secondMatrixRow][secondMatrixCol];
 
         System.out.println("Enter second matrix elements:");
-        for (int i = 0; i < row; i++) {
+        for (int i = 0; i < secondMatrixRow; i++) {
             for (int j = 0; j < secondMatrixCol; j++) {
                 secondMatrix[i][j] = scanner.nextInt();
             }
         }
 
-        int[][] result = new int[col][secondMatrixCol];
+        int[][] result = new int[firstMatrixRow][secondMatrixCol];
 
-        for (int i = 0; i < row; i++) {
+        for (int i = 0; i < firstMatrixRow; i++) {
             for (int j = 0; j < secondMatrixCol; j++) {
-                for (int k = 0; k < col; k++) {
+                for (int k = 0; k < secondMatrixRow; k++) {
                     result[i][j] += matrix[i][k] * secondMatrix[k][j];
                 }
             }
@@ -133,7 +166,12 @@ public class MatrixOperation {
     }
 
     private static boolean checkMagicalMatrix(int[][] matrix) {
-        boolean flag = false;
+        if (matrix == null) {
+            System.out.println("Matrix not created yet! Please create a matrix first.");
+            createMatrix();
+        };
+
+        boolean isMagicalMatrix = false;
         if(row != col) {
             System.out.println("For magic square, matrix must be of same row and column");
             return false;
@@ -151,13 +189,13 @@ public class MatrixOperation {
             colSum = 0;
             for (int j = 0; j < col; j++) {
                 rowSum += matrix[i][j];
-                colSum += matrix[j][row-1-i];
+                colSum += matrix[j][i];
             }
             if (rowSum == initialRowSum && colSum == initialRowSum) {
-                flag = true;
+                isMagicalMatrix = true;
             } else {
-                flag = false;
-                return flag;
+                isMagicalMatrix = false;
+                return isMagicalMatrix;
             }
         }
 
@@ -166,10 +204,10 @@ public class MatrixOperation {
             diagonalSum += matrix[j][j];
         }
         if (diagonalSum == initialRowSum) {
-            flag = true;
+            isMagicalMatrix = true;
         } else {
-            flag = false;
-            return flag;
+            isMagicalMatrix = false;
+            return isMagicalMatrix;
         }
 
         diagonalSum = 0;
@@ -177,18 +215,23 @@ public class MatrixOperation {
             diagonalSum += matrix[j][row-1-j];
         }
         if (diagonalSum == initialRowSum) {
-            flag = true;
+            isMagicalMatrix = true;
         } else {
-            flag = false;
-            return flag;
+            isMagicalMatrix = false;
+            return isMagicalMatrix;
         }
 
         return true;
     }
 
     private static boolean checkPrimeHarmonic(int[][] matrix) {
-        boolean flag = false;
+        if (matrix == null) {
+            System.out.println("Matrix not created yet! Please create a matrix first.");
+            createMatrix();
+        };
+
         if (matrix[0].length < 3) {
+            System.out.println("Matrix must have at least 3 columns for Prime Harmonic check.");
             return false;
         }
         int primeCount = 0;
@@ -199,29 +242,26 @@ public class MatrixOperation {
                     primeCount++;
                 }
             }
-            if (primeCount == 3) {
-                flag = true;
-                primeCount=0;
-            } else {
+            if (primeCount != 3) {
                 return false;
+            } else {
+                primeCount = 0;
             }
         }
         return true;
     }
 
     private static boolean checkPrime(int[][] matrix, int i, int j) {
-        boolean isPrime = true;
-        if (matrix[i][j] == 0 || matrix[i][j] == 1) {
-            isPrime = false;
-            return isPrime;
+        int number = matrix[i][j];
+        if (number <= 1) {
+            return false;
         }
-        for (int k = 2; k < matrix[i][j]/2; k++) {
-            if (matrix[i][j]%k == 0) {
-                isPrime = false;
-                return isPrime;
+        for (int k = 2; k <= number/2; k++) {
+            if (number%k == 0) {
+                return false;
             }
         }
-        return isPrime;
+        return true;
     }
 }
 
