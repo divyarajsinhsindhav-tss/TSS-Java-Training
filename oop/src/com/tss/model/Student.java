@@ -69,6 +69,10 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student ID: " + this.id + "\nStudent name: " + this.name + "\nStudent Course: " + this.course + "\nFees Paid: " + this.feesPaid + "\nTotal Fees: " + this.totalFees;
+        return "Student ID: " + this.id +
+                "\nStudent name: " + this.name +
+                "\nStudent Course: " + this.course +
+                "\nFees Paid: " + this.feesPaid +
+                "\nTotal Fees: " + this.totalFees;
     }
 }

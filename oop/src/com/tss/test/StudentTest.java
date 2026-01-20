@@ -42,7 +42,7 @@ public class StudentTest {
             int choice = scanner.nextInt();
             switch (choice) {
                 case 1:
-                    System.out.println(student1.toString());
+                    System.out.println(student1);
                     break;
                 case 2:
                     System.out.println("Pending fees: " + student1.getPenddingFees());
@@ -57,7 +57,8 @@ public class StudentTest {
                     break;
                 case 4:
                     System.out.println("Enter course name: ");
-                    String updatedCourse = scanner.next();
+                    scanner.nextLine();
+                    String updatedCourse = scanner.nextLine();
                     student1.setCourse(updatedCourse);
                     break;
                 case 0:
