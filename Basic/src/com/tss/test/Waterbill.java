@@ -3,9 +3,8 @@ package com.tss.test;
 import java.util.Scanner;
 
 public class Waterbill {
+    final static int METER_CHARGE = 75;
     public static void main(String[] args) {
-        int meter_charge = 75;
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter number");
         int input = scanner.nextInt();
@@ -23,7 +22,7 @@ public class Waterbill {
             }
         }
 
-        total_water_bill = charges + meter_charge;
+        total_water_bill = charges + METER_CHARGE;
         System.out.println(total_water_bill);
     }
 }
