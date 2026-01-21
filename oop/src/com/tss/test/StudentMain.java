@@ -16,12 +16,30 @@ public class StudentMain {
     static Course[] courses;
 
     public static void main(String[] args) {
-        System.out.print("Enter number of students: ");
-        int userInputForNumberOfStudent = scanner.nextInt();
-        students = new Student[userInputForNumberOfStudent];
-        System.out.print("\nEnter number of course: ");
-        int userInputForNumberOfCourse = scanner.nextInt();
-        courses = new Course[userInputForNumberOfCourse];
+        int numberOfStudent;
+        do {
+            System.out.print("Enter number of students: ");
+            numberOfStudent = scanner.nextInt();
+            if (numberOfStudent > 0 && numberOfStudent <= MAX_STUDENT) {
+                break;
+            }
+            System.out.println("Must be greater than 0 or less than 10");
+        } while (numberOfStudent <= 0 || numberOfStudent > MAX_STUDENT);
+
+        students = new Student[numberOfStudent];
+
+        int numberOfCourse;
+        do{
+            System.out.print("\nEnter number of course: ");
+            numberOfCourse = scanner.nextInt();
+            if (numberOfCourse > 0 && numberOfCourse <= MAX_COURSE) {
+                break;
+            }
+            System.out.println("Must be greater than 0 or less than 5");
+        } while (numberOfCourse <= 0 || numberOfCourse > MAX_COURSE);
+
+        courses = new Course[numberOfCourse];
+
         int studentId;
         Student student;
 
@@ -152,6 +170,8 @@ public class StudentMain {
 
                     System.out.println("Course updated successfully!");
                     break;
+                case 9:
+                    return;
                 default:
                     System.out.println("Please enter valid choice");
             }
@@ -221,7 +241,7 @@ public class StudentMain {
     }
 
     private static void addCourse() {
-        if (countOfCourse == MAX_COURSE) {
+        if (countOfCourse == courses.length) {
             System.out.println("Course limit reached!");
             return;
         }
@@ -275,8 +295,8 @@ public class StudentMain {
         }
 
         System.out.println("-----------------------------------------------------------------------------------------");
-        System.out.printf("| %-5s | %-20s | %-30s | %-10s | %-10s |%n",
-                "ID", "Name", "Courses", "Paid", "Pending");
+        System.out.printf("| %-5s | %-20s | %-30s | %-10s | %-10s | %-10s |%n",
+                "ID", "Name", "Courses", "Paid", "Pending", "Total Fees");
         System.out.println("-----------------------------------------------------------------------------------------");
 
         for (int i = 0; i < countOfStudent; i++) {
@@ -290,12 +310,13 @@ public class StudentMain {
                 }
             }
 
-            System.out.printf("| %-5d | %-20s | %-30s | %-10.2f | %-10.2f |%n",
+            System.out.printf("| %-5d | %-20s | %-30s | %-10.2f | %-10.2f | %-10.2f |%n",
                     student.getId(),
                     student.getName(),
                     courseNames.toString(),
                     student.getFeesPaid(),
-                    student.getPenddingFees()
+                    student.getPenddingFees(),
+                    student.getTotalFees()
             );
         }
 
@@ -367,5 +388,10 @@ public class StudentMain {
         } while (exists);
 
         return id;
+    }
+
+    //TODO
+    private static void assignCourse(int id) {
+
     }
 }
