@@ -394,4 +394,16 @@ public class StudentMain {
     private static void assignCourse(int id) {
 
     }
+
+    private static void payFees(int id) {
+
+    }
+
+    private static void pendingFees(int id) {
+
+    }
+
+    private static void displaySingleStudent(int id) {
+
+    }
 }
